@@ -4,7 +4,7 @@
 
 ## Motivation:
 
-One of my biggest passions in life lies within the sport of soccer. I love everything about the game, from watching casually, to analyzing tactics, analyzing soccer data has always been something I was interested in. This project aims to use data on soccer player attributes in order to draw better comparisons between players.
+One of my biggest passions in life lies within the sport of soccer. I love everything about the game, from watching casually, to analyzing tactics, analyzing soccer data has always been something I was interested in. When watching soccer, I always find myself saying "I wish we had a player like player X", this project helps to address that statement. This project aims to use data on soccer player attributes in order to draw better comparisons between players.
 
 ## Project Description:
 
@@ -17,6 +17,8 @@ Based on prior knowledge, soccer players can generally be identified by the foll
   - Winger, False 9, Target Forward, Striker
   - Deep Lying Playmaker, Advanced Playmaker, Holding Midfielder, Box to Box Midfielder
   - Centerback, Fullback, Wingback
+
+This project aims to cluster players according to similar playstyles, and use these clusters as means of player comparison. For players in the same cluster, K nearest neighbors can determine the most similar players to that player based on playstyle.
 
 ## Data:
 
@@ -56,6 +58,8 @@ PCA was utilized before clustering with 12 principal components in accordance wi
 
 ![pca](images/pca_scree.png)
 
+![pca](images/good_pca.png)
+
 Visualizing the data in 2D after PCA:
 
 ![blob](images/data_blob.png)
@@ -70,9 +74,22 @@ The two main types of clustering used in this project were a hard clustering met
 
 ## K-means:
 
+The first attempt at clustering the data was made with K-means clustering. I attempted to cluster with a range of clusters from 2 to 12 and observed the resulting silhouette plots and cluster visualizations.
+
+![k-means](images/sil_no_gk4.png)
+
+Average silhouette score: .217
+
 ![k-means](images/sil_no_gk5.png)
 
 Average silhouette score : 0.181
+
+Ultimately, 5 clusters seemed to be the optimal number of clusters to differentiate playstyles as much as possible. After 5 clusters, the clustering became extremely messy and non interpretable. After looking into the clusters, I labeled the clusters as following:
+  - Cluster 1: Holding Midfielders/Deep Lying Playmakers
+  - Cluster 2: Strikers/Advanced Playmakers
+  - Cluster 3: Centerbacks/Fullbacks
+  - Cluster 4: Outside Midfielders/Wingers
+  - Cluster 5: Centerbacks
 
 ## NMF:
 
@@ -80,15 +97,23 @@ Using NMF, the goal was to soft cluster players into latent topics or in this ca
 
 ![nmf-2](images/nmf_topics.png)
 
-From these labels, individual players could be interpreted based on how highly they weight on a particular playstyle. 9 players were selected who I had strong intuition as to what playstyle they should weight most heavily on. These players are shown in the plot below. 
+From these labels, individual players could be interpreted based on how highly they weight on a particular playstyle. 9 players were selected who I had strong intuition as to what playstyle they should weight most heavily on. These players are shown in the plot below.
 
 ![nmf](images/nmf_weights.png)
 
-## Results:
+Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that the often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gives a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. 
 
 ## Player Comparisons:
 
-Player comparison was done using K Nearest Neighbors with a player and its five nearest neighbors in the same cluster.
+Player comparison was done using K Nearest Neighbors with a player and its five nearest neighbors in the same cluster. Some results of this are shown using the radar charts below.
+
+![radar1](images/Luka_Modric.png)
+
+![radar2](images/Lionel_Messi.png)
+
+![radar3](images/Mesut_Ozil.png)
+
+![radar4](images/Clint_Dempsey.png)
 
 ## Future Work:
 
