@@ -59,7 +59,11 @@ PCA was utilized before clustering with 11 principal components in accordance wi
 
 ![pca](images/pca_scree2.png)
 
+To attempt to interpret the principal components, the componenets of each principal component were analyzed according to the top 5 weighted features for each principal component. 
+
 ![pca](images/PCA_comps2.png)
+
+Ultimately the principal componenets were not very interpretable and did not provide any discernable insights. 
 
 Visualizing the data in 2D after PCA:
 
