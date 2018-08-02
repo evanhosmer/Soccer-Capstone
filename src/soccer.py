@@ -499,6 +499,19 @@ def name_clusters(names, k_labels):
 
     return names_clusters
 
+def normalize_data(df):
+    '''
+    INPUT: Dataframe
+    OUTPUT: Normalized data between 0 and 1 for NMF
+    '''
+    df_std_norm = df.drop(['preferred_foot','attacking_work_rate','defensive_work_rate'], axis = 1)
+    df_dummies_norm = df[['preferred_foot','attacking_work_rate','defensive_work_rate']].values
+    scaler = MinMaxScaler()
+    new_x_norm = scaler.fit_transform(df_std_norm)
+    final_data_norm = np.concatenate((new_x_norm,df_dummies_norm), axis = 1)
+
+    return final_data_norm
+
 def K_nearest(player, nameslist, cluster_list, X):
     '''
     INPUT: Player name, List of names, list of clusters, Dataframe
@@ -507,22 +520,28 @@ def K_nearest(player, nameslist, cluster_list, X):
     nbrs = NearestNeighbors(n_neighbors=6, algorithm='ball_tree').fit(X)
     distances, indices = nbrs.kneighbors(X)
     idx = np.where(nameslist == player)[0][0]
+    # Pull indices and distances of the 5 nearest neighbors
     dist = distances[idx][1:]
     ind = indices[idx][1:]
+    # pull names from series of player names
     five_names = np.array(nameslist[ind])
 
     return dist, five_names, ind, indices
 
 def five_nearest_radar(player, nameslist, fivenearest, indices, cols, X):
     '''
-    INPUT: Player name, nameslist, list of five nearest n_neighbors
-    indices, column labels, Dataframe
+    INPUT: Player to compare, list of player names, list of five nearest neighbors
+    indices of 5 nearest, column labels, Dataframe
     OUTPUT: Radar chart of selected player and 5 nearest neighbors
     '''
+
+    # Find index of desired player
     idx = np.where(nameslist == player)[0][0]
+    # Pull indices of 5 nearest neighbors for that player
     ind = indices[idx]
     cols = cols
     feats = np.array(cols)
+    #Get attributes of 5 nearest neighbors
     stats = X.loc[ind[0],feats].values
     stats1 = X.loc[ind[1],feats].values
     stats2 = X.loc[ind[2],feats].values
@@ -530,7 +549,7 @@ def five_nearest_radar(player, nameslist, fivenearest, indices, cols, X):
     stats4 = X.loc[ind[4],feats].values
     stats5 = X.loc[ind[5],feats].values
 
-
+    # Set up angles for radar plot
     angles=np.linspace(0, 2*np.pi, len(feats), endpoint=False)
     stats=np.concatenate((stats,[stats[0]]))
     angles=np.concatenate((angles,[angles[0]]))
@@ -562,19 +581,6 @@ def five_nearest_radar(player, nameslist, fivenearest, indices, cols, X):
 
     plt.show()
 
-def normalize_data(df):
-    '''
-    INPUT: Dataframe
-    OUTPUT: Normalized data between 0 and 1 for NMF
-    '''
-    df_std_norm = df.drop(['preferred_foot','attacking_work_rate','defensive_work_rate'], axis = 1)
-    df_dummies_norm = df[['preferred_foot','attacking_work_rate','defensive_work_rate']].values
-    scaler = MinMaxScaler()
-    new_x_norm = scaler.fit_transform(df_std_norm)
-    final_data_norm = np.concatenate((new_x_norm,df_dummies_norm), axis = 1)
-
-    return final_data_norm
-
 def nmf_model(n_components, max_iter, df):
     '''
     INPUT: number of componenets, max iterations, dataframe
@@ -594,12 +600,14 @@ def top_five_pertopic(H, cols):
     '''
     array = np.argsort(H)
 
+    # For each topic, pull the 5 most highly weighted features
     top_fives = []
     for idx in range(len(array)):
         top_five = array[idx][-5:]
         top_five_r = top_five[::-1]
         top_fives.append(top_five_r)
 
+    # Replace indices with feature names
     five_names = []
     for idx in range(len(top_fives)):
         arr = top_fives[idx]
