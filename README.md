@@ -99,7 +99,7 @@ Ultimately, 6 clusters seemed to be the optimal number of clusters to differenti
 
 ## NMF:
 
-Using NMF, the goal was to soft cluster players into latent topics or in this case playstyles. NMF was performed using 7 latent topics with the resulting latent topics shown below.
+Using NMF, the goal was to soft cluster players into latent topics or in this case playstyles. From these latent topics, the top 5 most weighted features were analyzed in order to assign the topic to a playstyle. NMF was performed using 7 latent topics with the resulting latent topics and labels shown below.
 
 ![nmf-2](images/nmf_topics.png)
 
@@ -107,7 +107,7 @@ From these labels, individual players could be interpreted based on how highly t
 
 ![nmf](images/nmf_weights.png)
 
-Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that the often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gives a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means.
+Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that they often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gives a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. The NMF results were ultimately the most interpretable and lined up most closely with my prior intuition and knowledge of these players. 
 
 ## Player Comparisons:
 
