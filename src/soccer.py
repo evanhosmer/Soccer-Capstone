@@ -81,6 +81,28 @@ def players_and_teams(df):
 
     return leagues, std_data, cols, player_mean_stats
 
+def no_gks(df):
+    '''
+    INPUT: Dataframe
+    OUTPUT: Dataframe with goalkeepers removed from the dataset
+    '''
+
+    no_gk = df[df['gk_diving'] < 30]
+    no_gk_df = no_gk.drop(['gk_diving','gk_handling','gk_kicking','gk_positioning','gk_reflexes'], axis = 1)
+
+    return no_gk_df
+
+def data_plot(data):
+    '''
+    INPUT: PCA transformed data
+    OUTPUT: Plot of data
+    '''
+
+    plt.scatter(data.T[0], data.T[1], c='b', **plot_kwds)
+    frame = plt.gca()
+    frame.axes.get_xaxis().set_visible(False)
+    frame.axes.get_yaxis().set_visible(False)
+
 def country_plots(leagues, std_data, cols):
     '''
     INPUT: Leagues df, aggegated league stats df, column names
@@ -142,6 +164,102 @@ def country_plots(leagues, std_data, cols):
     ax.invert_yaxis()
     ax.set_xlabel('Sprint Speed (z-score)')
     ax.set_title('Which league has the fastest players?')
+
+    plt.tight_layout()
+
+def player_plots(df):
+    '''
+    INPUT: Dataframe
+    OUTPUT: Player comparison charts
+    '''
+    overall = df.sort_values(by=['overall_rating'], ascending = False)
+    speed = df.sort_values(by=['sprint_speed'], ascending = False)
+    dribbling = df.sort_values(by=['dribbling'], ascending = False)
+    ball_control = df.sort_values(by=['ball_control'], ascending = False)
+    df['total_passing'] = (df['long_passing'] + df['short_passing'] + df['vision'] + df['crossing']) / 4
+    df['total_defending'] = (df['standing_tackle'] + df['sliding_tackle'] + df['marking'] + df['interceptions']) / 4
+    passing = df.sort_values(by=['total_passing'], ascending = False)
+    defending = df.sort_values(by=['total_defending'], ascending = False)
+
+    fig = plt.figure(figsize = (12,6))
+
+    ax = fig.add_subplot(231)
+    x = overall.iloc[0:10]['overall_rating'].values
+    y = overall.iloc[0:10]['player_name_x'].values
+
+    ax.barh(y, x, align='center',
+            color='green', ecolor='black')
+    ax.set_yticks(range(len(y)))
+    ax.set_yticklabels(y)
+    ax.set_xlim(75,100)
+    ax.invert_yaxis()
+    ax.set_xlabel('Overall Rating')
+    ax.set_title('10 best players by overall rating')
+
+    ax2 = fig.add_subplot(232)
+    x2 = speed.iloc[0:10]['sprint_speed'].values
+    y2 = speed.iloc[0:10]['player_name_x'].values
+
+    ax2.barh(y2, x2, align='center',
+            color='green', ecolor='black')
+    ax2.set_yticks(range(len(y2)))
+    ax2.set_yticklabels(y2)
+    ax2.set_xlim(75,100)
+    ax2.invert_yaxis()
+    ax2.set_xlabel('Sprint Speed')
+    ax2.set_title('10 Fastest Players')
+
+    ax3 = fig.add_subplot(233)
+    x3 = dribbling.iloc[0:10]['dribbling'].values
+    y3 = dribbling.iloc[0:10]['player_name_x'].values
+
+    ax3.barh(y3, x3, align='center',
+            color='green', ecolor='black')
+    ax3.set_yticks(range(len(y3)))
+    ax3.set_yticklabels(y3)
+    ax3.set_xlim(85,100)
+    ax3.invert_yaxis()
+    ax3.set_xlabel('Dribbling Rating')
+    ax3.set_title('10 Best Dribblers')
+
+    ax4 = fig.add_subplot(234)
+    x4 = ball_control.iloc[0:10]['ball_control'].values
+    y4 = ball_control.iloc[0:10]['player_name_x'].values
+
+    ax4.barh(y4, x4, align='center',
+            color='green', ecolor='black')
+    ax4.set_yticks(range(len(y4)))
+    ax4.set_yticklabels(y4)
+    ax4.set_xlim(75,100)
+    ax4.invert_yaxis()
+    ax4.set_xlabel('Ball Control Rating')
+    ax4.set_title('10 Best Ball Controllers')
+
+    ax5 = fig.add_subplot(235)
+    x5 = passing.iloc[0:10]['total_passing'].values
+    y5 = passing.iloc[0:10]['player_name_x'].values
+
+    ax5.barh(y5, x5, align='center',
+            color='green', ecolor='black')
+    ax5.set_yticks(range(len(y5)))
+    ax5.set_yticklabels(y5)
+    ax5.set_xlim(75,100)
+    ax5.invert_yaxis()
+    ax5.set_xlabel('Passing Rating')
+    ax5.set_title('10 Best Passers')
+
+    ax6 = fig.add_subplot(236)
+    x6 = defending.iloc[0:10]['total_defending'].values
+    y6 = defending.iloc[0:10]['player_name_x'].values
+
+    ax6.barh(y6, x6, align='center',
+            color='green', ecolor='black')
+    ax6.set_yticks(range(len(y6)))
+    ax6.set_yticklabels(y6)
+    ax6.set_xlim(75,100)
+    ax6.invert_yaxis()
+    ax6.set_xlabel('Defending Rating')
+    ax6.set_title('10 Best Defenders')
 
     plt.tight_layout()
 
@@ -502,17 +620,21 @@ if __name__ == '__main__':
     mean_player_df = mean_player_data(clean_df)
     names = get_player_names(mean_player_df,player_data)
     std_data = standardize_data(mean_player_df)
+    no_gks_df = no_gks(mean_player_df)
+    std_data_no_gk = standardize_data(no_gks_df)
 
     # EDA
     data_w_country = pd.read_csv('playerteams.csv')
     leagues, s_data, cols, player_mean_stats = players_and_teams(data_w_country)
     # country_plots(leagues,s_data)
+    # player_plots(no_gks_df)
 
     # PCA
     pca, X_pca = PCA_model(11,std_data)
     # scree_plot(pca)
     pca_comps = PCA_components(std_data, pca, mean_player_df.columns)
     # single_radar_plot('Mesut Oezil', 'Andres Iniesta', player_mean_stats)
+    # data_plot(X_pca)
 
     #K-Means
     # silhouette_charts(X_pca,range(2,12))
@@ -527,5 +649,5 @@ if __name__ == '__main__':
 
     # NMF
     norm_data = normalize_data(df_mean)
-    W,H = nmf_model(12,250,norm_data)
+    W,H = nmf_model(7,250,norm_data)
     top_five = top_five_pertopic(H, df_mean.columns)
