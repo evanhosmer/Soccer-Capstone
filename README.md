@@ -100,6 +100,12 @@ Ultimately, 6 clusters seemed to be the optimal number of clusters to differenti
   - Cluster 4: Full Backs/Center Backs
   - Cluster 5: Box to Box Midfielders/Holding Midfielders
   - Cluster 6: Wingers/Wingbacks
+  
+ To visualize that these clusters are indeed doing at least a decent job in seperating the players, I observed a radar chart from two players in opposite clusters. 
+ 
+![diff](images/oz_celo.png)
+
+These radar charts do in fact not line up well, which shows that these clusters are at least seperating players fairly well based on attribute ratings. 
 
 
 ## NMF:
