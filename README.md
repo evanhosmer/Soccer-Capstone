@@ -142,6 +142,7 @@ While the data seemed to be unfit for clustering in general, the player comparis
 - Gather more granular data (web scraping).
 - Obtain transfer market data for each player.
 - Compare players based on performance and. price
+- Transfer market recommender for low budget teams
 - Make historical comparisons between players.
 
 ## References:
