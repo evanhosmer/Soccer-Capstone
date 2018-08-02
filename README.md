@@ -23,9 +23,9 @@ This project aims to cluster players according to similar playstyles, and use th
 
 ## Data:
 
-Data for this project comes from a dataset on kaggle which can be found [here](https://www.kaggle.com/hugomathien/soccer/kernels). This data comes in the form of a SQL database with 7 different tables. The main table used in this project was the Player_Attributes table which contained the FIFA attribute ratings for each player. Each attribute is on a scale from 0-100 with the attributes being determined by EA Sports algorithms based on player performance. 
+Data for this project came from a European soccer dataset on kaggle which can be found [here](https://www.kaggle.com/hugomathien/soccer/kernels). This data came in the form of a SQL database with 7 different tables. The main table used in this project was the Player_Attributes table which contained the FIFA attribute ratings for each player. Each attribute is on a scale from 0-100 with the attributes being determined by EA Sports algorithms based on player performance. 
 
-This dataset contained FIFA ratings from FIFA 12-16 and each player had multiple rows with their attributes over this time period. The different data points for each player indicated that players "form", or performance at the time when the attributes were updated. The data contained the following features:
+This dataset contained FIFA ratings from FIFA 2012-2016 and each player had multiple rows with their attributes over this time period. The different data points for each player indicated that players "form", or performance at the time when the attributes were updated. The dataset contained ~9950 players with 36 features for each player. The data contained the following features:
 
 ![cols](images/cols.png)
 
@@ -33,10 +33,10 @@ This dataset contained FIFA ratings from FIFA 12-16 and each player had multiple
 ## Data Cleaning:
 
 The following actions were performed to clean the data:
-  - Remove players with NaN's
-  - Aggregate player attributes over time to the mean values
-  - Remove statistics not representative of playstyle (preferred foot, work rates, etc)
-  - Standardize data
+  - Removed players with NaN's
+  - Aggregated player attributes over time to the mean values
+  - Removed statistics not representative of playstyle
+  - Standardized/normalized data
 
 ## EDA:
 Examining the distribution of features:
@@ -51,7 +51,7 @@ Looking at the best players by attribute:
 
 ![comp](images/10_best_players.png)
 
-Before clustering, the dimensionality of the data was a concern. This dataset had a problem with multicolinearity as shown by high Variance Inflation Factors.
+Before clustering, the dimensionality of the data was a concern. This dataset had a problem with multicolinearity exemplified by high variance inflation factors. Many of the features were very highly correlated with eachother as shown with a correlation heat map. 
 
 ![corr](images/corr_heat.png)
 
@@ -59,7 +59,7 @@ PCA was utilized before clustering with 11 principal components in accordance wi
 
 ![pca](images/pca_scree2.png)
 
-To attempt to interpret the principal components, the componenets of each principal component were analyzed according to the top 5 weighted features for each principal component. 
+To attempt to interpret the principal components, the components of each principal component were analyzed according to the top 5 weighted features for each principal component. 
 
 ![pca](images/PCA_comps2.png)
 
@@ -101,12 +101,11 @@ Ultimately, 6 clusters seemed to be the optimal number of clusters to differenti
   - Cluster 5: Box to Box Midfielders/Holding Midfielders
   - Cluster 6: Wingers/Wingbacks
   
- To visualize that these clusters are indeed doing at least a decent job in seperating the players, I observed a radar chart from two players in opposite clusters (Cluster 2 and Cluster 6).
+To visualize that these clusters are indeed doing at least a decent job in seperating the players, I observed a radar chart from two players in opposite clusters (Cluster 2 and Cluster 6).
  
 ![diff](images/oz_celo.png)
 
-These radar charts do in fact not line up well, which shows that these clusters are at least seperating players fairly well based on attribute ratings. The clustering also obviously did a good job in seperating goalkeepers from field players, but this should be expected due to how goalkeepers are rated in FIFA. 
-
+These radar charts do in fact not line up well, which shows that these clusters are at least seperating players fairly well based on position and attribute ratings. The clustering also obviously did a good job in seperating goalkeepers from field players, but this should be expected due to how goalkeepers are rated in FIFA. 
 
 ## NMF:
 
@@ -118,7 +117,7 @@ From these labels, individual players could be interpreted based on how highly t
 
 ![nmf](images/nmf_weights.png)
 
-Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that they often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gives a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. The NMF results were ultimately the most interpretable and lined up most closely with my prior intuition and knowledge of these players. 
+Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that they often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gave a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. The NMF results were ultimately the most interpretable and lined up most closely with my prior intuition and knowledge of these players. 
 
 ## Player Comparisons:
 
@@ -134,7 +133,7 @@ Player comparison was done using K Nearest Neighbors with a player and its five 
 
 ![radar5](images/Ronaldo.png)
 
-While the data seemed to be unfit for clustering in general, the player comparisons managed to be fairly interpretable. When analyzing the radar charts, the player comparisons made sense both intuitively and visually. The comparable players map together fairly well as shown by the radar charts. While the clustering did not do a fantastic job of clustering players by playstyle, the clusters do seem to still cluster very similar players based on their attributes. 
+While the data seemed to be unfit for clustering in general, the player comparisons managed to be fairly interpretable. When analyzing the radar charts, the player comparisons made sense both intuitively and visually. The comparable players map together fairly well as shown by the radar charts. While the clustering did not do a fantastic job of clustering players by playstyle, the clusters do seem to still cluster very similar players based on their attributes and position. 
 
 ## Future Work:
 
