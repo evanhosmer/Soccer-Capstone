@@ -10,7 +10,7 @@ One of my biggest passions in life lies within the sport of soccer. I love every
 
 For this project, I explored soccer player attributes from the EA Sports video game FIFA in an attempt to cluster players based on playstyle. This project addresses two main questions:
   - Can players be clustered based on their playstyle?
-  - What players are most similar to player X that have the same playstyle?
+  - What players are most similar to a given player that have the same playstyle?
 
 Based on prior knowledge, soccer players can generally be identified by the following playstyles:
 
