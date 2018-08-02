@@ -79,7 +79,7 @@ The two main types of clustering used in this project were a hard clustering met
 
 ## K-means:
 
-The first attempt at clustering the data was made with K-means clustering. I attempted to cluster with a range of clusters from 2 to 12 and observed the resulting silhouette plots and cluster visualizations.
+The first attempt at clustering the data was made with K-means clustering. I attempted to cluster with a range of clusters from 2 to 12 and observed the resulting silhouette plots and cluster visualizations. Cluster values of 4,5, and 6 returned the bset clusters based on silhoutte score and interpretability. The resulting silhouette plots for these number of clusters are shown below. 
 
 ![k-means](images/sil3.png)
 
@@ -93,7 +93,7 @@ Average silhouette score : .263
 
 Average silhouette score: .225
 
-Ultimately, 6 clusters seemed to be the optimal number of clusters to differentiate playstyles as much as possible. After 6 clusters, the clustering became extremely messy and non interpretable. After looking into the clusters, I labeled the clusters as following:
+Ultimately, 6 clusters seemed to be the optimal number of clusters to differentiate playstyles as much as possible. After 6 clusters, the clustering became extremely messy and non interpretable. After looking at the cluster centers and players within the clusters, I labeled the clusters as following:
   - Cluster 1: Center Backs
   - Cluster 2: Forwards/Advanced Playmakers
   - Cluster 3: Goalkeepers
@@ -101,11 +101,11 @@ Ultimately, 6 clusters seemed to be the optimal number of clusters to differenti
   - Cluster 5: Box to Box Midfielders/Holding Midfielders
   - Cluster 6: Wingers/Wingbacks
   
- To visualize that these clusters are indeed doing at least a decent job in seperating the players, I observed a radar chart from two players in opposite clusters. 
+ To visualize that these clusters are indeed doing at least a decent job in seperating the players, I observed a radar chart from two players in opposite clusters (Cluster 2 and Cluster 6).
  
 ![diff](images/oz_celo.png)
 
-These radar charts do in fact not line up well, which shows that these clusters are at least seperating players fairly well based on attribute ratings. 
+These radar charts do in fact not line up well, which shows that these clusters are at least seperating players fairly well based on attribute ratings. The clustering also obviously did a good job in seperating goalkeepers from field players, but this should be expected due to how goalkeepers are rated in FIFA. 
 
 
 ## NMF:
