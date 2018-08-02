@@ -34,7 +34,7 @@ This dataset contained FIFA ratings from FIFA 12-16 and each player had multiple
 The following actions were performed to clean the data:
   - Remove players with NaN's
   - Aggregate player attributes over time to the mean values
-  - Remove Goalkeepers and Goalkeeper statistics
+  - Remove statistics not representative of playstyle (preferred foot, work rates, etc)
   - Standardize data
 
 ## EDA:
@@ -54,15 +54,15 @@ Before clustering, the dimensionality of the data was a concern. This dataset ha
 
 ![corr](images/corr_heat.png)
 
-PCA was utilized before clustering with 12 principal components in accordance with the scree plot show below.
+PCA was utilized before clustering with 11 principal components in accordance with the scree plot show below.
 
-![pca](images/pca_scree.png)
+![pca](images/pca_scree2.png)
 
-![pca](images/good_pca.png)
+![pca](images/PCA_comps2.png)
 
 Visualizing the data in 2D after PCA:
 
-![blob](images/data_blob.png)
+![blob](images/data_blob2.png)
 
 An example of a radar chart used to compare players is shown below with the players Mesut Ozil and Andres Iniesta.
 
@@ -76,20 +76,26 @@ The two main types of clustering used in this project were a hard clustering met
 
 The first attempt at clustering the data was made with K-means clustering. I attempted to cluster with a range of clusters from 2 to 12 and observed the resulting silhouette plots and cluster visualizations.
 
-![k-means](images/sil_no_gk4.png)
+![k-means](images/sil3.png)
 
-Average silhouette score: .217
+Average silhouette score: .283
 
-![k-means](images/sil_no_gk5.png)
+![k-means](images/sil.png)
 
-Average silhouette score : 0.181
+Average silhouette score : .263
 
-Ultimately, 5 clusters seemed to be the optimal number of clusters to differentiate playstyles as much as possible. After 5 clusters, the clustering became extremely messy and non interpretable. After looking into the clusters, I labeled the clusters as following:
-  - Cluster 1: Holding Midfielders/Deep Lying Playmakers
-  - Cluster 2: Strikers/Advanced Playmakers
-  - Cluster 3: Centerbacks/Fullbacks
-  - Cluster 4: Outside Midfielders/Wingers
-  - Cluster 5: Centerbacks
+![k-means](images/sil2.png)
+
+Average silhouette score: .225
+
+Ultimately, 6 clusters seemed to be the optimal number of clusters to differentiate playstyles as much as possible. After 6 clusters, the clustering became extremely messy and non interpretable. After looking into the clusters, I labeled the clusters as following:
+  - Cluster 1: Center Backs
+  - Cluster 2: Forwards/Advanced Playmakers
+  - Cluster 3: Goalkeepers
+  - Cluster 4: Full Backs/Center Backs
+  - Cluster 5: Box to Box Midfielders/Holding Midfielders
+  - Cluster 6: Wingers/Wingbacks
+
 
 ## NMF:
 
@@ -101,7 +107,7 @@ From these labels, individual players could be interpreted based on how highly t
 
 ![nmf](images/nmf_weights.png)
 
-Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that the often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gives a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. 
+Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that the often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gives a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means.
 
 ## Player Comparisons:
 
