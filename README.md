@@ -75,7 +75,7 @@ An example of a radar chart used to compare players is shown below with the play
 
 ## Clustering:
 
-The two main types of clustering used in this project were a hard clustering method in K-means, and a soft clustering method in Non Negative Matrix Factorization. The goal was to generate player clusters that could be used for player comparison.
+The two main types of clustering used in this project were a hard clustering method in K-means, and a soft clustering method in Non Negative Matrix Factorization. The goal was to generate player clusters that could be used for player comparison. Other clustering techniques such at t-SNE, DBSCAN, and HDBSCAN were experimented with but did not produce interpretable results for this data. 
 
 ## K-means:
 
