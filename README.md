@@ -4,7 +4,7 @@
 
 ## Motivation:
 
-One of my biggest passions in life lies within the sport of soccer. I love everything about the game, from watching casually, to analyzing tactics, analyzing soccer data has always been something I was interested in. When watching soccer, I always find myself saying "I wish we had a player like player X", this project helps to address that statement. This project aims to use data on soccer player attributes in order to draw better comparisons between players.
+One of my biggest passions in life lies within the sport of soccer. I love everything about the game, from watching casually, to analyzing tactics, analyzing soccer data has always been something I was interested in. Having played the game all my life, I have always been interested in the numerous different playstyles that soccer players can fall into. No soccer players truly play the exact same way and it can be difficult to compare players as a result. When watching soccer, I always find myself saying "I wish we had a player like player X", this project helps to address that statement. This project aims to use data on soccer player attributes in order to draw meaningful comparisons between players based on their playstyle. 
 
 ## Project Description:
 
@@ -14,17 +14,18 @@ For this project, I explored soccer player attributes from the EA Sports video g
 
 Based on prior knowledge, soccer players can generally be identified by the following playstyles:
 
-  - Winger, False 9, Target Forward, Striker
-  - Deep Lying Playmaker, Advanced Playmaker, Holding Midfielder, Box to Box Midfielder
-  - Centerback, Fullback, Wingback
+  - Forwards: Winger, False 9, Target Forward, Striker
+  - Midfielders: Deep Lying Playmaker, Advanced Playmaker, Holding Midfielder, Box to Box Midfielder
+  - Defenders: Centerback, Fullback, Wingback
+  - Goalkeepers
 
-This project aims to cluster players according to similar playstyles, and use these clusters as means of player comparison. For players in the same cluster, K nearest neighbors can determine the most similar players to that player based on playstyle.
+This project aims to cluster players according to similar playstyles, and use these clusters as means of player comparison. Both hard clustering (K-Means) and soft clustering methods (NMF) were used to attempt to cluster players. For players in the same cluster, K nearest neighbors was used to determine the most similar players to that player based on playstyle. 
 
 ## Data:
 
-Data for this project comes from a dataset on kaggle which can be found [here](https://www.kaggle.com/hugomathien/soccer/kernels). This data comes in the form of a SQL database with 7 different tables. The main table used in this project was the Player_Attributes table which contained the FIFA attribute ratings for each player.
+Data for this project comes from a dataset on kaggle which can be found [here](https://www.kaggle.com/hugomathien/soccer/kernels). This data comes in the form of a SQL database with 7 different tables. The main table used in this project was the Player_Attributes table which contained the FIFA attribute ratings for each player. Each attribute is on a scale from 0-100 with the attributes being determined by EA Sports algorithms based on player performance. 
 
-This dataset contained FIFA ratings from FIFA 12-16 and each player had multiple rows with their attributes over this time period. The data contained the following features:
+This dataset contained FIFA ratings from FIFA 12-16 and each player had multiple rows with their attributes over this time period. The different data points for each player indicated that players "form", or performance at the time when the attributes were updated. The data contained the following features:
 
 ![cols](images/cols.png)
 
