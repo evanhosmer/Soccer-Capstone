@@ -111,7 +111,7 @@ Ultimately, the soft clustering proved to be a bit more insightful into a partic
 
 ## Player Comparisons:
 
-Player comparison was done using K Nearest Neighbors with a player and its five nearest neighbors in the same cluster. Some results of this are shown using the radar charts below.
+Player comparison was done using K Nearest Neighbors with a player and its five nearest neighbors in the same cluster. The player and their five nearest neighbors can be compared visually using radar charts. Some results of this are shown using the radar charts below for 5 selected players. 
 
 ![radar1](images/Luka_Modric.png)
 
@@ -120,6 +120,10 @@ Player comparison was done using K Nearest Neighbors with a player and its five 
 ![radar3](images/Mesut_Ozil.png)
 
 ![radar4](images/Clint_Dempsey.png)
+
+![radar5](images/Ronaldo.png)
+
+While the data seemed to be unfit for clustering in general, the player comparisons managed to be fairly interpretable. When analyzing the radar charts, the player comparisons made sense both intuitively and visually. The comparable players map together fairly well as shown by the radar charts. While the clustering did not do a fantastic job of clustering players by playstyle, the clusters do seem to still cluster very similar players based on their attributes. 
 
 ## Future Work:
 
