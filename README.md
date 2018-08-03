@@ -33,10 +33,10 @@ This dataset contained FIFA ratings from FIFA 2012-2016 and each player had mult
 ## Data Cleaning:
 
 The following actions were performed to clean the data:
-  - Removed players with NaN's
-  - Aggregated player attributes over time to the mean values
-  - Removed statistics not representative of playstyle
-  - Standardized/normalized data
+  - Removed players with NaN's.
+  - Aggregated player attributes over time to the mean values.
+  - Removed statistics not representative of playstyle.
+  - Standardized/normalized data.
 
 ## EDA:
 Examining the distribution of features:
@@ -140,8 +140,8 @@ While the data seemed to be unfit for clustering in general, the player comparis
 - Obtain real player statistics.
 - Gather more granular data (web scraping).
 - Obtain transfer market data for each player.
-- Compare players based on performance and. price
-- Transfer market recommender for low budget teams
+- Compare players based on performance and price.
+- Transfer market recommender for low budget teams.
 - Make historical comparisons between players.
 
 ## References:
