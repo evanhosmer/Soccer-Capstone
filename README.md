@@ -4,13 +4,13 @@
 
 ## Motivation:
 
-One of my biggest passions in life lies within the sport of soccer. I love everything about the game, from watching casually, to analyzing tactics, analyzing soccer data has always been something I was interested in. Having played the game all my life, I have always been interested in the numerous different playstyles that soccer players can fall into. No soccer players truly play the exact same way and it can be difficult to compare players as a result. When watching soccer, I always find myself saying "I wish we had a player like player X", this project helps to address that statement. This project aims to use data on soccer player attributes in order to draw meaningful comparisons between players based on their playstyle. 
+One of my biggest passions in life lies within the sport of soccer. I love everything about the game, from watching casually, to analyzing tactics, analyzing soccer data has always been something I was interested in. Having played the game all my life, I have always been interested in the numerous different playstyles that soccer players can fall into. No two soccer players truly play the exact same way and it can be difficult to compare players as a result. When watching soccer, I always find myself saying "I wish we had a player like player X", this project helps to address that statement. This project aims to use data on soccer player attributes in order to draw meaningful comparisons between players based on their playstyle. 
 
 ## Project Description:
 
 For this project, I explored soccer player attributes from the EA Sports video game FIFA in an attempt to cluster players based on playstyle. This project addresses two main questions:
   - Can players be clustered based on their playstyle?
-  - What players are most similar to a given player that have the same playstyle?
+  - What players are most similar to a given player that also have the same playstyle?
 
 Based on prior knowledge, soccer players can generally be identified by the following playstyles:
 
@@ -23,7 +23,7 @@ This project aims to cluster players according to similar playstyles, and use th
 
 ## Data:
 
-Data for this project came from a European soccer dataset on kaggle which can be found [here](https://www.kaggle.com/hugomathien/soccer/kernels). This data came in the form of a SQL database with 7 different tables. The main table used in this project was the Player_Attributes table which contained the FIFA attribute ratings for each player. Each attribute is on a scale from 0-100 with the attributes being determined by EA Sports algorithms based on player performance. 
+Data for this project came from a European soccer dataset on kaggle which can be found [here](https://www.kaggle.com/hugomathien/soccer/kernels). This data came in the form of a SQL database with 7 different tables. The main table used in this project was the Player_Attributes table which contained the FIFA attribute ratings for each player. Each attribute is on a scale from 0-100 with the attributes being determined by EA Sports algorithms based on player performance. The player attributes table was merged with the player and match tables in order to obtain player name, team, and league information for each player. 
 
 This dataset contained FIFA ratings from FIFA 2012-2016 and each player had multiple rows with their attributes over this time period. The different data points for each player indicated that players "form", or performance at the time when the attributes were updated. The dataset contained ~9950 players with 36 features for each player. The data contained the following features:
 
@@ -33,7 +33,7 @@ This dataset contained FIFA ratings from FIFA 2012-2016 and each player had mult
 ## Data Cleaning:
 
 The following actions were performed to clean the data:
-  - Removed players with NaN's.
+  - Removed players with NaN's (~80 players).
   - Aggregated player attributes over time to the mean values.
   - Removed statistics not representative of playstyle.
   - Standardized/normalized data.
@@ -75,7 +75,7 @@ An example of a radar chart used to compare players is shown below with the play
 
 ## Clustering:
 
-The two main types of clustering used in this project were a hard clustering method in K-means, and a soft clustering method in Non Negative Matrix Factorization. The goal was to generate player clusters that could be used for player comparison. Other clustering techniques such at t-SNE, DBSCAN, and HDBSCAN were experimented with but did not produce interpretable results for this data. 
+The two main types of clustering used in this project were a hard clustering method in K-means, and a soft clustering method in Non Negative Matrix Factorization. The goal was to generate player clusters that could be used for player comparison. Other clustering techniques such at t-SNE, DBSCAN, and HDBSCAN were experimented with but did not produce interpretable results for this data. Most unsupervised methods where the number of clusters was not explicitly specified produced 1-2 clusters which was not useful for this project. 
 
 ## K-means:
 
@@ -109,7 +109,7 @@ These radar charts do in fact not line up well, which shows that these clusters 
 
 ## NMF:
 
-Using NMF, the goal was to soft cluster players into latent topics or in this case playstyles. From these latent topics, the top 5 most weighted features were analyzed in order to assign the topic to a playstyle. NMF was performed using 7 latent topics with the resulting latent topics and labels shown below.
+Using NMF, the goal was to soft cluster players into latent topics or in this case playstyles. From these latent topics, the top 5 most weighted features were analyzed in order to assign a playstyle label to the latent topics. NMF was performed using 7 latent topics with the resulting latent topics and labels shown below.
 
 ![nmf-2](images/nmf_topics.png)
 
@@ -117,7 +117,7 @@ From these labels, individual players could be interpreted based on how highly t
 
 ![nmf](images/nmf_weights.png)
 
-Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that they often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gave a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. The NMF results were ultimately the most interpretable and lined up most closely with my prior intuition and knowledge of these players. 
+Ultimately, the soft clustering proved to be a bit more insightful into a particular players playstyle. Soccer players are unique in that they often exhibit characteristics and have attributes that could be translated to many different positions. This soft clustering gave a better insight into what combination of attributes and playstyles a player weights most on, rather than a hard cluster assignment as with k-means. The NMF results were ultimately the most interpretable and lined up most with my prior intuition and knowledge of these players. 
 
 ## Player Comparisons:
 
